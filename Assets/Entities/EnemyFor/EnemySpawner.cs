@@ -7,8 +7,10 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemyPrefab;
     // Start is called before the first frame update
     void Start(){
-        GameObject enemy = Instantiate(enemyPrefab, new Vector3(0,0,0), Quaternion.identity) as GameObject;
-        enemy.transform.parent = transform;
+        foreach(Transform child in transform){
+            GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
+            enemy.transform.parent = child  ;
+        }
     }
 
     // Update is called once per frame
