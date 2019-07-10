@@ -9,6 +9,7 @@ public class player : MonoBehaviour
     public GameObject projectile;
     public float projectileSpeed;
     public float fireRate = 0.2f;
+    public float PlayerHealth = 250f;
     float xmin;
     float xmax;
     
@@ -20,7 +21,8 @@ public class player : MonoBehaviour
         xmax = rightmost.x - padding;
     }
     void Fire(){
-        GameObject beam = Instantiate(projectile, transform.position, Quaternion.identity) as GameObject;
+        Vector3 startPosition = transform.position + new Vector3(0, 1, 0);
+        GameObject beam = Instantiate(projectile, startPosition, Quaternion.identity) as GameObject;
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, projectileSpeed, 0);        
     }
     // Update is called once per frame
@@ -43,5 +45,16 @@ public class player : MonoBehaviour
         // restricting to the gamespace
         float newX = Mathf.Clamp(transform.position.x, xmin, xmax);
         transform.position = new Vector3(newX, transform.position.y, transform.position.z);
+    }
+    void OnTriggerEnter2D(Collider2D collider) {
+        Projectile missile = collider.gameObject.GetComponent<Projectile>();
+        if(missile){
+            Debug.Log("Player got HIT!!!");
+            PlayerHealth -= missile.GetDamage();
+            missile.Hit();
+            if (PlayerHealth <= 0){
+                Destroy(gameObject);
+            }
+        }
     }
 }
