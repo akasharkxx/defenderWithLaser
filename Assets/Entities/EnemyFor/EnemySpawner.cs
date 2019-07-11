@@ -16,15 +16,12 @@ public class EnemySpawner : MonoBehaviour
 
     // Start is called before the first frame update
     void Start(){
-        foreach(Transform child in transform){
-            GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
-            enemy.transform.parent = child  ;
-        }
         float distance = transform.position.z - Camera.main.transform.position.z;
         Vector3 leftBoundary = Camera.main.ViewportToWorldPoint(new Vector3(0,0,distance));
         Vector3 rightBoundary = Camera.main.ViewportToWorldPoint(new Vector3(1,0,distance));
         xmin = leftBoundary.x + padding;
         xmax = rightBoundary.x - padding;
+        SpawnEnemies();
     }
 
     void OnDrawGizmos(){
@@ -47,12 +44,22 @@ public class EnemySpawner : MonoBehaviour
         }
         if(AllMembersDead()){
             Debug.Log("Empty Formation");
+            SpawnEnemies();
         }
     }
     bool AllMembersDead(){
-        foreach (Transform childPositionGameObject in transform)
-        {
-            
+        // transform.childCount; 
+        foreach (Transform childPositionGameObject in transform){
+            if(childPositionGameObject.childCount > 0){
+                return false;
+            }
+        }
+        return true;
+    }
+    void SpawnEnemies(){
+        foreach(Transform child in transform){
+            GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
+            enemy.transform.parent = child  ;
         }
     }
 }
