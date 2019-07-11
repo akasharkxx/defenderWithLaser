@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
     public float height = 5f;
     public float speed = 7.0f;
     public float padding = 1.0f;
-
+    public float spawnDelay = 0.5f;
     float xmin;
     float xmax;
     bool movingLeft = false;
@@ -44,9 +44,19 @@ public class EnemySpawner : MonoBehaviour
         }
         if(AllMembersDead()){
             Debug.Log("Empty Formation");
-            SpawnEnemies();
+            SpawnUntilFull();
         }
     }
+
+    Transform NextFreePosition(){
+        foreach (Transform childPositionGameObject in transform){
+            if(childPositionGameObject.childCount == 0){
+                return childPositionGameObject;
+            }
+        }
+        return null;
+    }
+
     bool AllMembersDead(){
         // transform.childCount; 
         foreach (Transform childPositionGameObject in transform){
@@ -59,7 +69,18 @@ public class EnemySpawner : MonoBehaviour
     void SpawnEnemies(){
         foreach(Transform child in transform){
             GameObject enemy = Instantiate(enemyPrefab, child.transform.position, Quaternion.identity) as GameObject;
-            enemy.transform.parent = child  ;
+            enemy.transform.parent = child;
+        }
+    }
+
+    void SpawnUntilFull(){
+        Transform freePosition = NextFreePosition();
+        if(freePosition){
+            GameObject enemy = Instantiate(enemyPrefab, freePosition.position, Quaternion.identity) as GameObject;
+            enemy.transform.parent = freePosition;
+        }
+        if(NextFreePosition()){
+            Invoke("SpawnUntilFull", spawnDelay);
         }
     }
 }
