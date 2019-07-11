@@ -45,5 +45,14 @@ public class EnemySpawner : MonoBehaviour
         }else if( rightEdgeOfTransformation > xmax){
             movingLeft = true;
         }
+        if(AllMembersDead()){
+            Debug.Log("Empty Formation");
+        }
+    }
+    bool AllMembersDead(){
+        foreach (Transform childPositionGameObject in transform)
+        {
+            
+        }
     }
 }
