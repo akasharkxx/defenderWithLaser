@@ -172,6 +172,9 @@ MonoBehaviour:
   health: 150
   projectileSpeed: 10
   shotsPerSecond: 0.5
+  ScoreValue: 150
+  DeathEnemySound: {fileID: 8300000, guid: 46622a9dd02f4754eae8c6a08c1ee5f6, type: 3}
+  fireSoundEnemy: {fileID: 8300000, guid: 094ec71b91d76f64a853f73c528cf614, type: 3}
 --- !u!95 &3298812973730976302
 Animator:
   serializedVersion: 3

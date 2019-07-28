@@ -11,6 +11,7 @@ public class EnemyBehaviour : MonoBehaviour{
     public int ScoreValue = 150;
     private ScoreKeeper scoreKeeper;
 
+    public AudioClip DeathEnemySound;
     public AudioClip fireSoundEnemy;
 
     void Start(){
@@ -23,12 +24,12 @@ public class EnemyBehaviour : MonoBehaviour{
             health -= missile.GetDamage();
             missile.Hit();
             if(health <= 0){
-                Destroy(gameObject);
-                scoreKeeper.Score(ScoreValue);
+                Die();
             }
             Debug.Log("Hit by a projectile");
         }
     }
+
     void Update(){
         float probability= Time.deltaTime * shotsPerSecond;
         if(Random.value < probability){ 
@@ -41,5 +42,11 @@ public class EnemyBehaviour : MonoBehaviour{
         GameObject EnemyBeam = Instantiate(projectile, startPosition, Quaternion.identity) as GameObject;
         EnemyBeam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, -projectileSpeed, 0);
         AudioSource.PlayClipAtPoint(fireSoundEnemy, transform.position);
+    }
+
+    void Die(){
+        AudioSource.PlayClipAtPoint(DeathEnemySound, transform.position);
+        Destroy(gameObject);
+        scoreKeeper.Score(ScoreValue);
     }
 }
