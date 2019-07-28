@@ -100,6 +100,7 @@ MonoBehaviour:
     type: 3}
   projectileSpeed: 0
   fireRate: 0.2
+  fireSound: {fileID: 8300000, guid: e10f5501b86cc3241b01297f440f87ef, type: 3}
   PlayerHealth: 250
 --- !u!60 &-4603803754769147043
 PolygonCollider2D:

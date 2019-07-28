@@ -8,7 +8,15 @@ public class EnemyBehaviour : MonoBehaviour{
     public float health = 150f;
     public float projectileSpeed = 10f;
     public float shotsPerSecond = 0.5f;
-    
+    public int ScoreValue = 150;
+    private ScoreKeeper scoreKeeper;
+
+    public AudioClip fireSoundEnemy;
+
+    void Start(){
+        scoreKeeper = GameObject.Find("Score").GetComponent<ScoreKeeper>();  
+    }
+
     void OnTriggerEnter2D(Collider2D collider) {
         Projectile missile = collider.gameObject.GetComponent<Projectile>();
         if(missile){
@@ -16,6 +24,7 @@ public class EnemyBehaviour : MonoBehaviour{
             missile.Hit();
             if(health <= 0){
                 Destroy(gameObject);
+                scoreKeeper.Score(ScoreValue);
             }
             Debug.Log("Hit by a projectile");
         }
