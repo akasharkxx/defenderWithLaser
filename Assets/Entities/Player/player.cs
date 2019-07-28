@@ -25,7 +25,7 @@ public class player : MonoBehaviour
         xmax = rightmost.x - padding;
     }
     void Fire(){
-        Vector3 startPosition = transform.position + new Vector3(0, 1, 0);
+        Vector3 startPosition = transform.position + new Vector3(0, 0, 0);
         GameObject beam = Instantiate(projectile, startPosition, Quaternion.identity) as GameObject;
         beam.GetComponent<Rigidbody2D>().velocity = new Vector3(0, projectileSpeed, 0);
         AudioSource.PlayClipAtPoint(fireSound, transform.position);        
