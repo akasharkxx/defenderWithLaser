@@ -6,7 +6,7 @@ using UnityEngine;
 public class ScoreKeeper : MonoBehaviour
 {
     private Text myText;
-    public int score = 0;
+    public static int score = 0;
     
     void Start(){
         myText = GetComponent<Text>();
@@ -17,8 +17,7 @@ public class ScoreKeeper : MonoBehaviour
         score+=points;
         myText.text = score.ToString();
     }
-    public void Reset(){
+    public static void Reset(){
         score = 0;
-        myText.text = score.ToString();
     }
 }

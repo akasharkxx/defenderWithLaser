@@ -58,8 +58,14 @@ public class player : MonoBehaviour
             PlayerHealth -= missile.GetDamage();
             missile.Hit();
             if (PlayerHealth <= 0){
-                Destroy(gameObject);
+                Die();
             }
         }
+    }
+
+    void Die(){
+        LevelManager man = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        man.LoadLevel("Lose Screen");
+        Destroy(gameObject);
     }
 }
